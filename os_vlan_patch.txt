@@ -1,0 +1,23 @@
+diff --git a/neutron/plugins/ml2/drivers/mechanism_odl.py b/neutron/plugins/ml2/drivers/mechanism_odl.py
+index d4e9233..416e870 100644
+--- a/neutron/plugins/ml2/drivers/mechanism_odl.py
++++ b/neutron/plugins/ml2/drivers/mechanism_odl.py
+@@ -371,4 +371,4 @@ class OpenDaylightMechanismDriver(api.MechanismDriver):
+         """
+         network_type = segment[api.NETWORK_TYPE]
+         return network_type in [constants.TYPE_LOCAL, constants.TYPE_GRE,
+-                                constants.TYPE_VXLAN]
++                                constants.TYPE_VXLAN, constants.TYPE_VLAN]
+diff --git a/neutron/tests/unit/ml2/test_mechanism_odl.py b/neutron/tests/unit/ml2/test_mechanism_odl.py
+index 5b58c4f..472387c 100644
+--- a/neutron/tests/unit/ml2/test_mechanism_odl.py
++++ b/neutron/tests/unit/ml2/test_mechanism_odl.py
+@@ -57,7 +57,7 @@ class OpenDaylightTestCase(test_plugin.NeutronDbPluginV2TestCase):
+         self.segment[api.NETWORK_TYPE] = constants.TYPE_FLAT
+         self.assertFalse(self.mech.check_segment(self.segment))
+         self.segment[api.NETWORK_TYPE] = constants.TYPE_VLAN
+-        self.assertFalse(self.mech.check_segment(self.segment))
++        self.assertTrue(self.mech.check_segment(self.segment))
+         self.segment[api.NETWORK_TYPE] = constants.TYPE_GRE
+         self.assertTrue(self.mech.check_segment(self.segment))
+         self.segment[api.NETWORK_TYPE] = constants.TYPE_VXLAN

@@ -1,0 +1,13 @@
+diff --git a/lib/databases/mysql b/lib/databases/mysql
+index ea22d14..08d6778 100644
+--- a/lib/databases/mysql
++++ b/lib/databases/mysql
+@@ -106,7 +106,7 @@ function configure_database_mysql {
+         # Turn on slow query log, log all queries (any query taking longer than
+         # 0 seconds) and log all non-indexed queries
+         sudo bash -c "source $TOP_DIR/functions && \
+-            iniset $MY_CONF mysqld slow-query-log 1 && \
++            iniset $MY_CONF mysqld slow-query-log 0 && \
+             iniset $MY_CONF mysqld slow-query-log-file $slow_log && \
+             iniset $MY_CONF mysqld long-query-time 0 && \
+             iniset $MY_CONF mysqld log-queries-not-using-indexes 1"
