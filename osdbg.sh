@@ -54,5 +54,6 @@ for br in `sudo ovs-vsctl list-br`; do
     sudo ovs-appctl fdb/show $br
 done
 
-exit 0
+set +o xtrace
 
+exit 0
