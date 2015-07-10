@@ -1,7 +1,7 @@
 #!/bin/bash
 #fixeth2.sh - run as root or sudo
 
-usage="usage: 0 hostname eth0ipaddr eth1ipaddr {netmask:-255.255.255.0} {gateway:-192.168.120.1} {dns1:-192.168.1.1}"
+usage="usage: $0 hostname eth0ipaddr eth1ipaddr {netmask:-255.255.255.0} {gateway:-192.168.120.1} {dns1:-192.168.1.1}"
 hostname=${1:?"$usage: hostname must be set"}
 eth0ipaddr=${2:?"$usage: eth0ipaddr must be set"}
 eth1ipaddr=${3:?"$usage: eth1ipaddr must be set"}
