@@ -13,10 +13,14 @@ cp /var/log/openvswitch/*.log $1
 
 /opt/tools/osdbg.sh $2 &> $1/$2_osdbg.txt
 
-cp -rf /opt/logs/stack $1
+logdir=$(grep SCREEN_LOGDIR /opt/devstack/local.conf | sed -e 's/SCREEN_LOGDIR=//')
+logdir=${logdir:-/opt/stack/logs}
+cp -rf $logdir $1
 
 /opt/tools/dbgiptables.sh &> $1/iptables.txt
 
 history > $1/history.txt
+
+cp /opt/devstack/local.conf $1
 
 exit 0

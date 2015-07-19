@@ -7,7 +7,9 @@ sudo rm -rf /etc/openvswitch/conf.db
 sudo systemctl start openvswitch
 /opt/tools/setlog.sh
 
-rm -rf /opt/logs/stack/*
+logdir=$(grep SCREEN_LOGDIR /opt/devstack/local.conf | sed -e 's/SCREEN_LOGDIR=//')
+logdir=${logdir:-/opt/stack/logs}
+rm -rf $logdir/*
 
 #sudo ovs-vsctl add-br br-eth1
 #sudo ovs-vsctl add-port br-eth1 eth1
