@@ -11,5 +11,5 @@ sleep 3
 /opt/tools/os_addvms.sh
 sleep 5
 /opt/tools/os_addfloatingips.sh
-sleep 1
-/opt/tools/os_addsecuritygroups.sh
+#sleep 1
+#/opt/tools/os_addsecuritygroups.sh
