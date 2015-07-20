@@ -1,26 +1,28 @@
-#!/bin/bash
 # $1: directory to store files
 # $2: prepend text to name of file
 
-set -vx
+#set -vx
 
-mkdir -p $1
+outdir=$1
+pre=$2
 
-ovsdb-tool -mm show-log &> $1/show.log
-cp /etc/openvswitch/conf.db $1
+mkdir -p $outdir
 
-cp /var/log/openvswitch/*.log $1
+ovsdb-tool -mm show-log &> $outdir/show.log
+cp /etc/openvswitch/conf.db $outdir
 
-/opt/tools/osdbg.sh $2 &> $1/$2_osdbg.txt
+cp /var/log/openvswitch/*.log $outdir
+
+/opt/tools/osdbg.sh $pre &> $outdir/osdbg.txt
 
 logdir=$(grep SCREEN_LOGDIR /opt/devstack/local.conf | sed -e 's/SCREEN_LOGDIR=//')
 logdir=${logdir:-/opt/stack/logs}
-cp -rf $logdir $1
+cp -rf $logdir $outdir
 
-/opt/tools/dbgiptables.sh &> $1/iptables.txt
+/opt/tools/dbgiptables.sh &> $outdir/iptables.txt
 
-history > $1/history.txt
+history &> $outdir/history.txt
 
-cp /opt/devstack/local.conf $1
+cp /opt/devstack/local.conf $outdir
 
 exit 0

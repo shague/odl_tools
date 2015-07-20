@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo iptables --line-number -nvL
+
 for ns in $(ip netns); do
     echo "==============================================================================="
     echo "$ns"

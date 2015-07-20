@@ -1,0 +1,15 @@
+sudo ovs-vsctl add-port br-ex patch-int -- set interface patch-int type=patch -- set interface patch-int options:peer=patch-ext
+
+sudo ip link set eth2 up ;  sudo ovs-vsctl add-port br-ex eth2
+
+# ====
+
+sudo ifconfig br-int up
+sudo ip link set eth2 up
+
+sudo ovs-vsctl add-port br-ex eth2
+sudo ovs-ofctl -O OpenFlow13  add-flow br-ex "priority=0, action=normal"
+sudo ovs-ofctl -O OpenFlow13  add-flow br-ex "dl_type=0x88cc, actions=CONTROLLER:65535"
+sudo ovs-vsctl add-port br-ex patch-int -- set interface patch-int type=patch -- set interface patch-int options:peer=patch-ext
+sudo ovs-vsctl set-controller br-ex tcp:192.168.x.31:6653
+sudo ovs-ofctl -O OpenFlow13 dump-flows br-ex
