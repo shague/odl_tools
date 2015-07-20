@@ -7,7 +7,7 @@ sleep 1
 /opt/tools/os_addadminkey.sh
 sleep 1
 /opt/tools/os_addextnetrtr.sh
-sleep 3
+sleep 5
 /opt/tools/os_addvms.sh
 sleep 5
 /opt/tools/os_addfloatingips.sh
