@@ -8,5 +8,5 @@ neutron router-create ext-rtr
 neutron router-gateway-set ext-rtr ext-net
 
 neutron net-create vx-net --provider:network_type vxlan --provider:segmentation_id 1500
-neutron subnet-create vx-net 10.100.5.0/24 --name vx-subnet
+neutron subnet-create vx-net 10.100.5.0/24 --name vx-subnet --dns-nameserver 8.8.8.8
 neutron router-interface-add ext-rtr vx-subnet
