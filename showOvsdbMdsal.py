@@ -139,6 +139,16 @@ class OvsdbNode:
 
 # ======================================================================
 
+def make_it_a_string(param):
+    result = ""
+    try:
+        result = str( param )
+    except:
+        pass
+    return result
+
+# ======================================================================
+
 def printError(msg):
     sys.stderr.write(msg)
 
@@ -345,8 +355,8 @@ def parseTopologyJsonNodeOvsdb(indent, mdsalTreeType, topologyId, nodeIndex, nod
     connectionInfoRaw = node.get('ovsdb:connection-info')
     connectionInfo = {}
     if type(connectionInfoRaw) is dict:
-        connectionInfo['inetMgr'] = connectionInfoRaw.get('local-ip') + ':' + str( connectionInfoRaw.get('local-port') )
-        connectionInfo['inetNode'] = connectionInfoRaw.get('remote-ip') + ':' + str( connectionInfoRaw.get('remote-port') )
+        connectionInfo['inetMgr'] = make_it_a_string(connectionInfoRaw.get('local-ip')) + ':' + make_it_a_string(connectionInfoRaw.get('local-port'))
+        connectionInfo['inetNode'] = make_it_a_string(connectionInfoRaw.get('remote-ip')) + ':' + make_it_a_string(connectionInfoRaw.get('remote-port'))
     otherConfigsRaw = node.get('ovsdb:openvswitch-other-configs')
     otherLocalIp = ''
     if type(otherConfigsRaw) is list:
@@ -459,13 +469,10 @@ def showPrettyNamesMap():
     prtLn('aliasMap:', 0)
     resultMap = {}
     for bridge in state.bridgeNodes.values():
-        resultMap[ bridge.alias ] = bridge.getOpenflowName()
+        resultMap[ bridge.alias ] = '{0: <25} {1: <7} {2}'.format(bridge.getOpenflowName(), bridge.name, bridge.dpId)
 
-    resultMapKeys = resultMap.keys()
-    resultMapKeys.sort()
-
-    for resultMapKey in resultMapKeys:
-        prtLn('{0}{1: <10} -> {2}'.format(spc, resultMapKey, resultMap[resultMapKey]), 0)
+    for resultMapKey in sorted(resultMap):
+        prtLn('{0}{1: <10} ->  {2}'.format(spc, resultMapKey, resultMap[resultMapKey]), 0)
     prtLn('', 0)
 
 # --
