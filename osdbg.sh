@@ -15,6 +15,8 @@ echo "=========="
 ip addr
 echo "=========="
 ip route
+echo "=========="
+arp -an
 
 echo "=========="
 for i in $(ip netns); do
@@ -27,6 +29,8 @@ for i in $(ip netns); do
 done
 
 #sudo ovsdb-client dump
+echo "=========="
+sudo ovs-vsctl list open_vSwitch
 echo "=========="
 sudo brctl show
 echo "=========="
@@ -50,6 +54,10 @@ for br in `sudo ovs-vsctl list-br`; do
     sudo ovs-ofctl --protocol=$proto show $br
     echo "-----"
     sudo ovs-ofctl --protocol=$proto dump-flows $br
+    echo "-----"
+    sudo ovs-ofctl --protocol=$proto dump-groups $br
+    echo "-----"
+    sudo ovs-ofctl --protocol=$proto dump-group-stats $br
     echo "-----"
     sudo ovs-appctl fdb/show $br
 done
