@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+
 vmip=$1
 
 if [[ $vmip == 10.100.5.* ]]; then
