@@ -2,6 +2,7 @@
 
 # $1: directory to store files
 # $2: prepend text to name of file
+# $3: collect neutron debug - make sure openrc has been source
 
 #set -vx
 
@@ -20,7 +21,9 @@ cp /etc/openvswitch/conf.db $outdir
 cp /var/log/openvswitch/*.log $outdir
 
 /opt/tools/osdbg.sh $pre &> $outdir/osdbg.txt
-/opt/tools/neutrondbg.sh $pre &> $outdir/neutrondbg.txt
+if [ "$3" != "no" ]; then
+    /opt/tools/neutrondbg.sh $pre &> $outdir/neutrondbg.txt
+fi
 
 logdir=$(grep SCREEN_LOGDIR /opt/devstack/local.conf | sed -e 's/SCREEN_LOGDIR=//')
 logdir=${logdir:-/opt/stack/logs}
